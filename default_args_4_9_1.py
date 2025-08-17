@@ -1,5 +1,7 @@
-# 関数定義について
-# https://docs.python.org/ja/3.13/tutorial/controlflow.html#defining-functions
+"""
+docstringとデフォルト引数について
+https://docs.python.org/ja/3.13/tutorial/controlflow.html#defining-functions
+"""
 
 
 # docstringについて
@@ -31,8 +33,11 @@ def ex2() -> None:
         L.append(a)
         return L
 
+    """
+    f を定義した時点で、2つのリスト[], []が作成され、f.__defaultsに格納される。
+    f.__defaults__ は ex2 のスコープにあるので、2つのリストはこのスコープの中で使いまわされる。
+    """
     print(f.__defaults__)  # ([], [])
-    # この時点で、fのデフォルト引数 L は [] である
 
     print(f(1))  # L = [1]
     print(f.__defaults__)  # ([1], [])
@@ -41,7 +46,7 @@ def ex2() -> None:
     print(f.__defaults__)  # ([1,2], [])
 
 
-# 後続の関数呼び出しでデフォルト引数を更新しない方法
+# 後続の関数呼び出しでデフォルト引数を更新しない方法：
 def ex3():
     def f(a, L=None):
         if L is None:
@@ -49,12 +54,15 @@ def ex3():
         L.append(a)
         return L
 
+    # f を定義した時点で、f.__defaults__ == (None,) である。
+    print(f.__defaults__)  # (None,)
+
     print(f(1))  # [1]
     print(f.__defaults__)  # (None,)
+    """
+    f(1)が実行された時点で空リスト [] が f のスコープで作成され、
+    L にそれが代入される。したがって、 f.__defaults__ はかわらない。
+    """
 
     print(f(2))  # [2]
     print(f.__defaults__)  # (None,)
-
-
-if __name__ == "__main__":
-    ex3()
