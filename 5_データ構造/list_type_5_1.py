@@ -42,5 +42,38 @@ def ex2() -> None:
     print(queue)  # deque(["Chunichi", "Dragons"])
 
 
+"""5.1.3 リストの内包表記
+
+集合論でよく使う内包表記を用いてリストを生成できる"""
+
+
+def ex3():
+    # 集合の記号を用いると、 { x**2 | x \in range(10) } ただしリストなので順序もデータに含まれる。
+    # どちらも [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+    squares: list[int] = list(map(lambda x: x**2, range(10)))
+    squares2: list[int] = [x**2 for x in range(10)]
+
+    # { (x, y) | x∈[1, 2, 3], y∈[3, 1, 4] with x≠y }
+    diff: list[tuple[int, int]] = [
+        (x, y) for x in [1, 2, 3] for y in [3, 1, 4] if x != y
+    ]
+
+
+"""5.1.4. ネストしたリストの内包表記"""
+
+
+def ex4() -> None:
+    # 次のリストに操作をしたい：
+    m: list[list[int]] = [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+    ]
+
+    # 転置
+    t: list[list[int]] = [[row[i] for row in m] for i in range(4)]
+    print(t)
+
+
 if __name__ == "__main__":
-    ex2()
+    ex4()
